@@ -1,0 +1,76 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ isEdit ? 'Modifier l\'utilisateur' : 'Nouvel' }} <span>{{ isEdit ? '' : 'Utilisateur' }}</span></h1>
+    </div>
+    <a mat-stroked-button routerLink="/users"><mat-icon>arrow_back</mat-icon> Retour</a>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state"><mat-spinner diameter="40" /></div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-layout">
+        <div class="form-card">
+          <div class="form-card-header"><mat-icon>person_outline</mat-icon><span>Informations personnelles</span></div>
+          <mat-divider />
+          <div class="form-card-body">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Matricule *</mat-label>
+                <input matInput formControlName="matricule">
+                @if (form.get('matricule')?.hasError('required')) { <mat-error>Obligatoire</mat-error> }
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Rôle *</mat-label>
+                <mat-select formControlName="role">
+                  @for (r of roles; track r.value) {
+                    <mat-option [value]="r.value">{{ r.label }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Nom complet *</mat-label>
+              <input matInput formControlName="full_name">
+              @if (form.get('full_name')?.hasError('required')) { <mat-error>Obligatoire</mat-error> }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Adresse email *</mat-label>
+              <input matInput type="email" formControlName="email">
+              @if (form.get('email')?.hasError('email')) { <mat-error>Email invalide</mat-error> }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Département</mat-label>
+                <input matInput formControlName="department">
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Téléphone</mat-label>
+                <input matInput formControlName="phone">
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>{{ isEdit ? 'Nouveau mot de passe (laisser vide pour garder l\'actuel)' : 'Mot de passe *' }}</mat-label>
+              <mat-icon matPrefix>lock_outline</mat-icon>
+              <input matInput type="password" formControlName="password">
+              @if (form.get('password')?.hasError('minlength')) { <mat-error>Minimum 6 caractères</mat-error> }
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-actions-card">
+          <a mat-stroked-button routerLink="/users">Annuler</a>
+          <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+            @if (saving()) { <mat-spinner diameter="18" /> } @else { <mat-icon>save</mat-icon> }
+            {{ isEdit ? 'Enregistrer' : 'Créer l\'utilisateur' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  }
+</div>

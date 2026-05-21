@@ -1,0 +1,51 @@
+.filters-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  .search-field { width: 280px; }
+  .role-field   { width: 200px; }
+}
+
+.loading-state { display: flex; justify-content: center; padding: 60px; }
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  color: var(--color-gold-light);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+
+  &.inactive { opacity: 0.4; background: var(--color-muted); }
+}
+
+.matricule {
+  font-family: monospace;
+  font-size: 12px;
+  background: var(--color-paper);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--color-navy);
+}
+
+.user-name {
+  font-weight: 500;
+  color: var(--color-navy);
+  font-size: 13px;
+}
+
+.user-email {
+  font-size: 11px;
+  color: var(--color-muted);
+  margin-top: 2px;
+}
+
+.actions-cell { display: flex; justify-content: flex-end; gap: 4px; }
+
+::ng-deep .row-inactive td { opacity: 0.6; }

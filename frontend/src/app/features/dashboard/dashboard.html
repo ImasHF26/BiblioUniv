@@ -1,0 +1,122 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Tableau de <span>bord</span></h1>
+      <p class="page-subtitle">Vue d'ensemble de votre bibliothèque universitaire</p>
+    </div>
+    <div class="header-actions">
+      @if (auth.isAdmin()) {
+        <a mat-raised-button color="primary" routerLink="/borrowings/new">
+          <mat-icon>add</mat-icon> Nouvel emprunt
+        </a>
+      }
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state">
+      <mat-spinner diameter="48" />
+    </div>
+  } @else {
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      @for (card of statCards; track card.key) {
+        <div class="stat-card">
+          <div class="stat-icon" [style.background]="card.color + '18'">
+            <mat-icon [style.color]="card.color">{{ card.icon }}</mat-icon>
+          </div>
+          <div class="stat-value">{{ getStatValue(card.key) }}</div>
+          <div class="stat-label">{{ card.label }}</div>
+        </div>
+      }
+    </div>
+
+    <!-- Amount card -->
+    @if (stats(); as s) {
+      <div class="amount-banner">
+        <div class="amount-icon">
+          <mat-icon>payments</mat-icon>
+        </div>
+        <div>
+          <div class="amount-value">{{ s.total_penalty_amount | number:'1.2-2' }} MAD</div>
+          <div class="amount-label">Montant total des pénalités impayées</div>
+        </div>
+        <a mat-stroked-button routerLink="/penalties" class="amount-action">
+          Gérer les pénalités <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </div>
+    }
+
+    <div class="dashboard-grid">
+      <!-- Recent Borrowings -->
+      <div class="table-container dashboard-table">
+        <div class="section-header">
+          <h3>Emprunts récents</h3>
+          <a mat-button routerLink="/borrowings">Voir tout <mat-icon>chevron_right</mat-icon></a>
+        </div>
+
+        @if (recentBorrows().length === 0) {
+          <div class="empty-state">
+            <mat-icon>library_books</mat-icon>
+            <p>Aucun emprunt récent</p>
+          </div>
+        } @else {
+          <table mat-table [dataSource]="recentBorrows()">
+            <ng-container matColumnDef="user_name">
+              <th mat-header-cell *matHeaderCellDef>Utilisateur</th>
+              <td mat-cell *matCellDef="let row">{{ row.user_name }}</td>
+            </ng-container>
+            <ng-container matColumnDef="book_title">
+              <th mat-header-cell *matHeaderCellDef>Livre</th>
+              <td mat-cell *matCellDef="let row" class="book-title-cell">{{ row.book_title }}</td>
+            </ng-container>
+            <ng-container matColumnDef="borrow_date">
+              <th mat-header-cell *matHeaderCellDef>Emprunté le</th>
+              <td mat-cell *matCellDef="let row">{{ row.borrow_date }}</td>
+            </ng-container>
+            <ng-container matColumnDef="due_date">
+              <th mat-header-cell *matHeaderCellDef>Échéance</th>
+              <td mat-cell *matCellDef="let row">{{ row.due_date }}</td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Statut</th>
+              <td mat-cell *matCellDef="let row">
+                <span [class]="getStatusClass(row.status)">{{ getStatusLabel(row.status) }}</span>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        }
+      </div>
+
+      <!-- Top Books -->
+      <div class="top-books-card table-container">
+        <div class="section-header">
+          <h3>Livres les plus empruntés</h3>
+        </div>
+        @if (topBooks().length === 0) {
+          <div class="empty-state">
+            <mat-icon>menu_book</mat-icon>
+            <p>Aucune donnée</p>
+          </div>
+        } @else {
+          <div class="top-books-list">
+            @for (book of topBooks(); track book.title; let i = $index) {
+              <div class="top-book-item">
+                <div class="book-rank">{{ i + 1 }}</div>
+                <div class="book-info">
+                  <div class="book-name">{{ book.title }}</div>
+                  <div class="borrow-bar">
+                    <div class="borrow-fill" [style.width.%]="(book.count / topBooks()[0].count) * 100"></div>
+                  </div>
+                </div>
+                <div class="book-count">{{ book.count }}</div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

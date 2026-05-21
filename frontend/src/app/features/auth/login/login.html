@@ -1,0 +1,71 @@
+<div class="login-page">
+  <div class="login-left">
+    <img src="image1.jpg" alt="Bibliothèque universitaire" class="login-bg-image" />
+    <div class="login-left-overlay"></div>
+    <div class="left-content">
+      <div class="logo-mark">
+        <mat-icon>local_library</mat-icon>
+      </div>
+      <h1 class="hero-title">BiblioUniv</h1>
+      <p class="hero-sub">Système de gestion de bibliothèque universitaire</p>
+
+      <div class="feature-list">
+        @for (feat of features; track feat.icon) {
+          <div class="feature-item">
+            <mat-icon class="feat-icon">{{ feat.icon }}</mat-icon>
+            <span>{{ feat.text }}</span>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="left-deco"></div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="card-header">
+        <h2>Connexion</h2>
+        <p>Accédez à votre espace bibliothèque</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="login-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Adresse email</mat-label>
+          <mat-icon matPrefix>alternate_email</mat-icon>
+          <input matInput type="email" formControlName="email" placeholder="votre@email.edu" autocomplete="email">
+          @if (form.get('email')?.hasError('email')) {
+            <mat-error>Email invalide</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Mot de passe</mat-label>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <input matInput [type]="showPass() ? 'text' : 'password'" formControlName="password" autocomplete="current-password">
+          <button mat-icon-button matSuffix type="button" (click)="showPass.set(!showPass())">
+            <mat-icon>{{ showPass() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        @if (error()) {
+          <div class="error-alert">
+            <mat-icon>error_outline</mat-icon>
+            {{ error() }}
+          </div>
+        }
+
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading() || form.invalid">
+          @if (loading()) {
+            <mat-spinner diameter="20" />
+          } @else {
+            <span class="btn-content"><mat-icon>login</mat-icon> Se connecter</span>
+          }
+        </button>
+      </form>
+
+      <!-- <div class="login-hint">
+        <p>Compte démo : <strong>admin&#64;biblio.edu</strong> / <strong>admin123</strong></p>
+      </div> -->
+    </div>
+  </div>
+</div>

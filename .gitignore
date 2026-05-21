@@ -1,0 +1,28 @@
+# ── Dépendances ──
+node_modules/
+venv/
+
+# ── Build & Cache ──
+dist/
+.angular/
+__pycache__/
+*.pyc
+*.pyo
+
+# ── Base de données locale ──
+*.db
+
+# ── IDE / Éditeur ──
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── OS ──
+.DS_Store
+Thumbs.db
+
+# ── Env ──
+.env
+.env.local

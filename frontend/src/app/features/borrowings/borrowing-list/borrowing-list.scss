@@ -1,0 +1,54 @@
+.filters-bar { margin-bottom: 20px; .status-field { width: 200px; } }
+.loading-state { display: flex; justify-content: center; padding: 60px; }
+
+.cell-primary { font-size: 13px; font-weight: 500; color: var(--color-navy); }
+.cell-secondary { font-size: 11px; color: var(--color-muted); margin-top: 2px; }
+.book-title { max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.overdue-text { color: var(--color-warning) !important; font-weight: 600; }
+.actions-cell { display: flex; justify-content: flex-end; gap: 4px; }
+
+::ng-deep .row-overdue td { background: rgba(230,81,0,0.03) !important; }
+
+.estimated-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFF3E0 100%);
+  border: 1px solid rgba(230, 150, 0, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+  margin-bottom: 20px;
+
+  .mat-icon {
+    color: #E6A200;
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .banner-amount {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: #E65100;
+  }
+
+  .banner-label {
+    font-size: 12px;
+    color: rgba(180, 100, 0, 0.75);
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
+}
+
+.penalty-estimated {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-warning);
+  background: #FFF3E0;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(230, 81, 0, 0.15);
+  white-space: nowrap;
+}

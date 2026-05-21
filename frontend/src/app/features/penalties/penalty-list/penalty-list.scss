@@ -1,0 +1,164 @@
+// ─── Estimated Penalties Section ──────────────────────────────────────────────
+.section-estimated {
+  margin-bottom: 36px;
+}
+
+.estimated-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #FFF8E1 0%, #FFF3E0 100%);
+  border: 1px solid rgba(230, 150, 0, 0.2);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 20px 24px;
+}
+
+.estimated-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  > .mat-icon {
+    color: #E6A200;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+  }
+
+  h3 {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-navy);
+    margin-bottom: 3px;
+  }
+
+  p {
+    font-size: 12px;
+    color: rgba(180, 100, 0, 0.7);
+  }
+}
+
+.estimated-tag {
+  display: inline-block;
+  background: #E6A200;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.estimated-total {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: #E65100;
+}
+
+.estimated-table {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg) !important;
+  border-top: none !important;
+}
+
+.days-late-cell {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-warning);
+}
+
+.badge-estimated {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 4px;
+  background: #FFF8E1 !important;
+  color: #E6A200 !important;
+  border: 1px solid rgba(230, 162, 0, 0.2);
+  font-size: 11px !important;
+
+  .mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+::ng-deep .row-estimated td {
+  background: rgba(255, 248, 225, 0.3) !important;
+}
+
+// ─── Confirmed Penalties Section ─────────────────────────────────────────────
+.section-confirmed {
+  margin-top: 8px;
+}
+
+.section-title-bar {
+  margin-bottom: 20px;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-navy);
+
+    .mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: var(--color-muted);
+    }
+  }
+}
+
+.unpaid-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #FBE9E7;
+  border: 1px solid rgba(230,81,0,0.2);
+  border-radius: var(--radius-lg);
+  padding: 16px 24px;
+  margin-bottom: 20px;
+
+  .mat-icon { color: var(--color-warning); font-size: 32px; width: 32px; height: 32px; }
+
+  .banner-amount {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-warning);
+  }
+
+  .banner-label {
+    font-size: 12px;
+    color: rgba(230,81,0,0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+}
+
+.filters-bar { margin-bottom: 20px; .filter-field { width: 200px; } }
+.loading-state { display: flex; justify-content: center; padding: 60px; }
+
+.cell-primary { font-size: 13px; font-weight: 500; color: var(--color-navy); }
+.cell-secondary { font-size: 11px; color: var(--color-muted); margin-top: 2px; }
+.book-title { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.reason-cell { max-width: 260px; font-size: 12px; color: var(--color-muted); }
+
+.amount-cell {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-danger);
+  &.paid { color: var(--color-success); }
+  &.estimated { color: var(--color-warning); }
+}
+
+::ng-deep .row-paid td { opacity: 0.6; }

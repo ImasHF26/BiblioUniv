@@ -1,0 +1,46 @@
+.loading-state { display: flex; justify-content: center; padding: 60px; }
+
+.form-layout { display: flex; flex-direction: column; gap: 16px; max-width: 700px; }
+
+.form-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(13,27,42,0.07);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy);
+  background: var(--color-cream);
+  .mat-icon { font-size: 18px; width: 18px; height: 18px; color: var(--color-gold); }
+}
+
+.form-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  @media (max-width: 600px) { grid-template-columns: 1fr; }
+}
+
+.full-width { width: 100%; }
+
+.form-actions-card {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  button, a { display: flex; align-items: center; gap: 6px; }
+}

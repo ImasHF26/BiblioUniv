@@ -1,0 +1,71 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Nouvel <span>Emprunt</span></h1>
+      <p class="page-subtitle">Enregistrer un nouvel emprunt de livre</p>
+    </div>
+    <a mat-stroked-button routerLink="/borrowings"><mat-icon>arrow_back</mat-icon> Retour</a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-layout">
+    <div class="form-card">
+      <div class="form-card-header">
+        <mat-icon>library_books</mat-icon>
+        <span>Informations de l'emprunt</span>
+      </div>
+      <mat-divider />
+      <div class="form-card-body">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Emprunteur *</mat-label>
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-select formControlName="user_id">
+            @for (u of users(); track u.id) {
+              <mat-option [value]="u.id">{{ getUserLabel(u) }}</mat-option>
+            }
+          </mat-select>
+          @if (form.get('user_id')?.hasError('required') && form.get('user_id')?.touched) {
+            <mat-error>Emprunteur obligatoire</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Livre *</mat-label>
+          <mat-icon matPrefix>menu_book</mat-icon>
+          <mat-select formControlName="book_id">
+            @for (b of books(); track b.id) {
+              <mat-option [value]="b.id">{{ getBookLabel(b) }}</mat-option>
+            }
+          </mat-select>
+          @if (form.get('book_id')?.hasError('required') && form.get('book_id')?.touched) {
+            <mat-error>Livre obligatoire</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Date d'échéance *</mat-label>
+          <mat-icon matPrefix>event</mat-icon>
+          <input matInput [matDatepicker]="picker" formControlName="due_date" [min]="minDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          @if (form.get('due_date')?.hasError('required') && form.get('due_date')?.touched) {
+            <mat-error>Date obligatoire</mat-error>
+          }
+          <mat-hint>La date limite de retour du livre</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Notes</mat-label>
+          <textarea matInput formControlName="notes" rows="3" placeholder="Remarques facultatives…"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <a mat-stroked-button routerLink="/borrowings">Annuler</a>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+        @if (saving()) { <mat-spinner diameter="18" /> } @else { <mat-icon>check</mat-icon> }
+        Enregistrer l'emprunt
+      </button>
+    </div>
+  </form>
+</div>

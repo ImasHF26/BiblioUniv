@@ -1,0 +1,130 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">{{ isEdit ? 'Modifier le' : 'Ajouter un' }} <span>Livre</span></h1>
+      <p class="page-subtitle">{{ isEdit ? 'Mettre à jour les informations du livre' : 'Ajouter un nouveau livre au catalogue' }}</p>
+    </div>
+    <a mat-stroked-button routerLink="/books">
+      <mat-icon>arrow_back</mat-icon> Retour
+    </a>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-state"><mat-spinner diameter="40" /></div>
+  } @else {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-layout">
+
+        <!-- Main Info -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <mat-icon>info_outline</mat-icon>
+            <span>Informations principales</span>
+          </div>
+          <mat-divider />
+          <div class="form-card-body">
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>ISBN *</mat-label>
+                <input matInput formControlName="isbn" placeholder="978-x-xxxx-xxxx-x">
+                @if (form.get('isbn')?.hasError('required')) {
+                  <mat-error>ISBN obligatoire</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Catégorie</mat-label>
+                <mat-select formControlName="category_id">
+                  <mat-option [value]="null">Sans catégorie</mat-option>
+                  @for (cat of categories(); track cat.id) {
+                    <mat-option [value]="cat.id">{{ cat.name }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Titre *</mat-label>
+              <input matInput formControlName="title">
+              @if (form.get('title')?.hasError('required')) {
+                <mat-error>Titre obligatoire</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Auteur *</mat-label>
+              <input matInput formControlName="author">
+              @if (form.get('author')?.hasError('required')) {
+                <mat-error>Auteur obligatoire</mat-error>
+              }
+            </mat-form-field>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline">
+                <mat-label>Éditeur</mat-label>
+                <input matInput formControlName="publisher">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>Année de publication</mat-label>
+                <input matInput type="number" formControlName="publication_year" placeholder="2024">
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="description" rows="3"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Stock & Cover -->
+        <div class="form-side">
+          <div class="form-card">
+            <div class="form-card-header">
+              <mat-icon>inventory_2</mat-icon>
+              <span>Stock</span>
+            </div>
+            <mat-divider />
+            <div class="form-card-body">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre d'exemplaires *</mat-label>
+                <input matInput type="number" formControlName="total_copies" min="1">
+                @if (form.get('total_copies')?.hasError('min')) {
+                  <mat-error>Minimum 1 exemplaire</mat-error>
+                }
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <div class="form-card-header">
+              <mat-icon>image</mat-icon>
+              <span>Couverture</span>
+            </div>
+            <mat-divider />
+            <div class="form-card-body">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>URL de la couverture</mat-label>
+                <input matInput formControlName="cover_url" placeholder="https://...">
+                <mat-hint>Optionnel</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <a mat-stroked-button routerLink="/books">Annuler</a>
+            <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+              @if (saving()) {
+                <mat-spinner diameter="18" />
+              } @else {
+                <mat-icon>save</mat-icon>
+              }
+              {{ isEdit ? 'Enregistrer' : 'Ajouter le livre' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  }
+</div>
